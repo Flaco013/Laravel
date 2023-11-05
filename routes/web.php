@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -17,10 +18,13 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get("/busca-usuario/{name}/{lastname}", function($name, $lastname = "doe"){
- return "Hola: " .$name. " " .$lastname;
+Route::get("/busca-usuario/{name}/{lastname?}",[UserController::class, "show"])
+-> where(["name" => "[A-Za-z]+", "lastname" => "[A-Za-z]+"])->name("filtrado");
 
-}) -> where(["name" => "[A-Za-z]+", "lastname" => "[A-Za-z]+"])->name("filtrado");
+// Route::get("/busca-usuario/{name}/{lastname?}", function($name, $lastname = "doe"){
+//  return "Hola: " .$name. " " .$lastname;
+
+// }) -> where(["name" => "[A-Za-z]+", "lastname" => "[A-Za-z]+"])->name("filtrado");
 
 Route::get("/suma/{num1}/{num2}", function($num1, $num2){
 return $num1 + $num2;
